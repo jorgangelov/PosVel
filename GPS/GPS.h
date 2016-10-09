@@ -1,37 +1,20 @@
 #ifndef GPS_H
 #define GPS_H
 #include <string.h>
-
-
-struct tPosition
-{
-  tPosition()
-  {
-    memset(this, 0, sizeof(*this));
-  }
-
-  float x_I;
-  float y_I;
-  float z_I;
-};
+#include <stdio.h>
+#include "myMATH.h"
 
 
 
-struct tVelocity
-{
-  tVelocity()
-  {
-    memset(this, 0, sizeof(*this));
-  }
-  float u_I;
-  float v_I;
-  float w_I;
-};
+
+
+
+
 
 struct tPVState
 {
-  tPosition Position;
-  tVelocity Velocity;
+  cVector<3> Position;
+  cVector<3> Velocity;
 };
 
 
@@ -39,14 +22,38 @@ class cPVEstimation
 {
   public:
     cPVEstimation();
-    void begin(unsigned long _current_time, tPosition _initial_position);
-    tPVState getPVState(const tPosition& _position_measurement, unsigned long _current_time);
+    void begin(unsigned long _current_time, cVector<3>& _initial_position);
+    void update(unsigned long _current_time, cVector<3>& _position_measurement);
+    tPVState PosVel;
 
   private:
     unsigned long time_of_last_step;
-    tPVState PosVel;
 };
 
+
+
+
+
+
+cPVEstimation::cPVEstimation()
+{
+
+}
+
+void cPVEstimation::begin(unsigned long _current_time, cVector<3>& _initial_position)
+{
+  PosVel.Position = _initial_position;
+  time_of_last_step = _current_time;
+}
+
+void cPVEstimation::update(unsigned long _current_time, cVector<3> &_position_measurement)
+{
+  float Kp = 4, Kd = 4;
+  float dt = _current_time - time_of_last_step;
+
+
+
+}
 
 
 

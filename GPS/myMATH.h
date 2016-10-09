@@ -14,15 +14,13 @@ public:
   }
 
   float& operator()(uint8_t _i);
-  cVector<dim> operator+(cVector<dim>& _other);
+  cVector<dim> operator+(cVector<dim> _other);
   cVector<dim> operator*(float _f);
-
-private:
-float entries[dim];
+  float entries[dim];
 
 };
 
-template <uint8_t dim> cVector<dim> operator*(float _f,cVector<dim>& _vector);
+template <uint8_t dim> cVector<dim> operator*(float _f,cVector<dim> _vector);
 
 
 
@@ -32,7 +30,7 @@ template <uint8_t dim> float& cVector<dim>::operator()(uint8_t _i)
   return entries[_i-1];
 }
 
-template <uint8_t dim> cVector<dim> cVector<dim>::operator+(cVector<dim>& _other)
+template <uint8_t dim> cVector<dim> cVector<dim>::operator+(cVector<dim> _other)
 {
   cVector<dim> temp;
   for(int i=0; i<dim; i++)
@@ -53,7 +51,7 @@ template <uint8_t dim> cVector<dim> cVector<dim>::operator*(float _f)
   return temp;
 }
 
-template <uint8_t dim> cVector<dim> operator*(float _f, cVector<dim>& _vector)
+template <uint8_t dim> cVector<dim> operator*(float _f, cVector<dim> _vector)
 {
   cVector<dim> temp;
   for (int i=0; i<dim; i++)

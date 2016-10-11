@@ -4,4 +4,5 @@
 void cNEO::begin()
 {
     Uart.begin();
+    Serial.println("GPS Module Started!");
 }

@@ -1,7 +1,6 @@
 #include "COMM.h"
 #include "myMATH.h"
 
-
 class cNEO
 {
 public:

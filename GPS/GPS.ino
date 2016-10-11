@@ -13,6 +13,7 @@ NEO.begin();
 }
 
 void loop() {
-SER.show();
-
+NEO.update();
+//SER.show();
+//Serial.println("bla");
 }

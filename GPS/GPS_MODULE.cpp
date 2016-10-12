@@ -12,7 +12,7 @@ void cNEO::update()
 {
   if (Uart.available())
   {
-      char line[100];
+      char line[200];
       uint8_t num_bytes = Uart.getData(line);
       line[num_bytes] = '\0';
       

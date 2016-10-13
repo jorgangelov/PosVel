@@ -44,30 +44,19 @@ void cNEO::update()
     // Found the Header
     if (found_beginning)
     {
-      char* chrpt_array[15];
+      float numbers[15];
       int i = 0;
       // Do while sth is found and not more than 15 Entries are found
       while (token != NULL && i < 15)
       {
-        token = strtok(NULL, ",");
-        chrpt_array[i] = token;
+        token = strtok(NULL, ", \n");
+        numbers[i] = atof(token);
         i++;
-
       }
-
-      // Finished
-      char out_line[50];
-      sprintf(out_line, "Found %i Entries", i - 1);
-      Serial.println(out_line);
-      // Convert Entries to numbers
-      float numbers[15];
-      for (int j = 0; j < i - 1; j++)
-      {
-        numbers[j] = atof( chrpt_array[j] );
-        Serial.print(numbers[j]);
-        Serial.print(" ");
-      }
-      Serial.println("");
+      
+      position_measurement(1) = numbers[0];
+      position_measurement(2) = numbers[1];
+      position_measurement(3) = numbers[2];
 
     }
 

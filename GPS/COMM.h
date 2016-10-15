@@ -2,7 +2,7 @@
 #define COMM_H
 
 #define UART_BAUD 115200
-#define TIMEOUT 1
+#define TIMEOUT_MS 1
 
 #include <Arduino.h>
 

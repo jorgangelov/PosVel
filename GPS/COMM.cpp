@@ -28,7 +28,7 @@ int cSerial::getData(char *data)
         bytes++;
         startTime = millis();
       }
-      if ( ( millis() - startTime) > TIMEOUT)
+      if ( ( millis() - startTime) > TIMEOUT_MS)
       {
         TimedOut = true;
       }

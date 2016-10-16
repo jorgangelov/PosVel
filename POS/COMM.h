@@ -2,7 +2,7 @@
 #define COMM_H
 
 #define UART_BAUD 115200
-#define TIMEOUT_MS 1
+#define TIMEOUT_MS 5
 
 #include <Arduino.h>
 
@@ -29,7 +29,7 @@ public:
     void sendFloat(float f, char terminator = '\r');
     void sendPseudoFloat(float f, char terminator = '\r');
     void flushBuffer();
-    int bytes;
+    uint16_t bytes;
 };
 
 

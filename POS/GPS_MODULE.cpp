@@ -3,7 +3,7 @@
 
 void cNEO::begin()
 {
-  Uart.begin();
+  Uart.begin(9600);
   blink(1);
   Serial.println("GPS Module Started!");
   isGPSavailable = false;
@@ -15,10 +15,10 @@ void cNEO::update()
   if (Uart.available())
   {
     // Read Buffer
-    char line[500];
-    uint8_t num_bytes = Uart.getData(line);
+    char line[1000];
+    uint16_t num_bytes = Uart.getData(line);
     line[num_bytes] = '\0';
-
+    
 
     bool found_beginning = false;
     char* token;

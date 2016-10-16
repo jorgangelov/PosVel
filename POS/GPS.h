@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "myMATH.h"
 #define EARTH_RADIUS_M 6371000
-
+#define GPS_I2C_ID 42
 
 struct tPVState
 {

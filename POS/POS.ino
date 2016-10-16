@@ -46,8 +46,7 @@ void setup()
   blink(15);
 
   // Waiting for Second FIX
-  while ( !gps.location.isValid() )
-  {
+
 
     if (Uart.getData(Buffer) )
     {
@@ -59,8 +58,8 @@ void setup()
       }
 
     }
-  }
-
+  
+  
   initial_LLA(1) = gps.location.lat();
   initial_LLA(2) = gps.location.lng();
   initial_LLA(3) = gps.altitude.meters();

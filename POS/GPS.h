@@ -18,6 +18,7 @@ class cPVEstimation
     void begin(unsigned long _current_time, cVector<3> _initial_position);
     void update(unsigned long _current_time, cVector<3> _position_measurement);
     tPVState PosVel;
+    cVector<3> Init_Pos;
 
   private:
     unsigned long time_of_last_step;

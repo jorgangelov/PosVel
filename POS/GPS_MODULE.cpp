@@ -4,7 +4,9 @@
 void cNEO::begin()
 {
   Uart.begin();
+  blink(1);
   Serial.println("GPS Module Started!");
+  isGPSavailable = false;
 }
 
 
@@ -47,19 +49,30 @@ void cNEO::update()
       float numbers[15];
       int i = 0;
       // Do while sth is found and not more than 15 Entries are found
-      while (token != NULL && i < 15 && strcmp(token,"$GPGSA") != 0)
+      while (token != NULL && i < 15 && strcmp(token, "$GPGSA") != 0)
       {
-        token = strtok(NULL,",\n");
+        token = strtok(NULL, ",\n");
         numbers[i] = atof(token);
         i++;
       }
 
       if (i >= 14)
       {
+        isGPSavailable = true;
         position_measurement(1) = numbers[1];
         position_measurement(2) = numbers[3];
         position_measurement(3) = numbers[8];
       }
+      else
+      {
+        isGPSavailable = false;
+      }
+
+
+    }
+    else
+    {
+      isGPSavailable = false;
     }
 
   }

@@ -10,7 +10,8 @@ cPVEstimation::cPVEstimation()
 
 void cPVEstimation::begin(unsigned long _current_time, cVector<3> _initial_position)
 {
-  PosVel.Position = _initial_position;
+  Init_Pos = _initial_position;
+  PosVel.Position = Init_Pos - _initial_position;
   time_of_last_step = _current_time;
 }
 

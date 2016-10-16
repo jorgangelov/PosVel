@@ -7,18 +7,27 @@ cPVEstimation Estimator;
 
 void setup() {
 
-  blink(3);
   NEO.begin();
+  // Wait for GPS
+  while (NEO.isGPSavailable == false)
+  {
+  NEO.update();
+  }
+
+  // GPS Found
+  Serial.println("GPS Found!");
+  blink(2);
+
+  // INIT Esrimator
   Estimator.begin(millis(), NEO.position_measurement);
 
-}
-
-void loop() {
-
-  NEO.update();
-  Estimator.update(millis(), NEO.position_measurement);
-  if (Estimator.PosVel.Position(1) != 0)
+  // Start Estimating
+  bool EstimationActive = true;
+  while (EstimationActive)
   {
+    NEO.update();
+    Estimator.update(millis(),(NEO.position_measurement-Estimator.Init_Pos));
+    
     Serial.print("x: ");
     Serial.print(Estimator.PosVel.Position(1));
     Serial.print(" y: ");
@@ -31,7 +40,15 @@ void loop() {
     Serial.print(Estimator.PosVel.Velocity(2));
     Serial.print(" w: ");
     Serial.println(Estimator.PosVel.Velocity(3));
+
+ 
   }
 
+
+
+
+}
+
+void loop() {
 
 }

@@ -10,6 +10,6 @@ public:
 
     void begin();
     void update();
-    bool isGPSavailable();
+    bool isGPSavailable;
 
 };

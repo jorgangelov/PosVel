@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdio.h>
 #include "myMATH.h"
+#define EARTH_RADIUS_M 6371000
+
 
 struct tPVState
 {
@@ -15,10 +17,9 @@ class cPVEstimation
 {
   public:
     cPVEstimation();
-    void begin(unsigned long _current_time, cVector<3> _initial_position);
+    void begin(unsigned long _current_time);
     void update(unsigned long _current_time, cVector<3> _position_measurement);
     tPVState PosVel;
-    cVector<3> Init_Pos;
 
   private:
     unsigned long time_of_last_step;

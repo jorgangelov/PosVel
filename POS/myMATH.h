@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <math.h>
+#define PI acos(-1)
 
 // Declarations
 template <uint8_t dim> class cVector

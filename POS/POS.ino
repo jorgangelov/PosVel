@@ -9,8 +9,8 @@ cPVEstimation Estimator;
 cVector<3> initial_LLA;
 cVector<3> delta_NED;
 bool isGPSvalid = false;
-volatile cVector<3> delta_NED_readyTosend;
-volatile cVector<3> delta_UVW_readyTosend;
+volatile float delta_NED_readyTosend[3];
+volatile float delta_UVW_readyTosend[3];
 volatile bool isGPSvalid_readyTosend = false;
 unsigned long watchdog = 0;
 
@@ -116,12 +116,12 @@ void setup()
     Estimator.update(millis(), delta_NED);
 
     cli();
-    delta_NED_readyTosend(1) = Estimator.PosVel.Position(1);
-    delta_NED_readyTosend(2) = Estimator.PosVel.Position(2);
-    delta_NED_readyTosend(3) = Estimator.PosVel.Position(3);
-    delta_UVW_readyTosend(1) = Estimator.PosVel.Velocity(1);
-    delta_UVW_readyTosend(2) = Estimator.PosVel.Velocity(2);
-    delta_UVW_readyTosend(3) = Estimator.PosVel.Velocity(3);
+    delta_NED_readyTosend[0] = Estimator.PosVel.Position(1);
+    delta_NED_readyTosend[1] = Estimator.PosVel.Position(2);
+    delta_NED_readyTosend[2] = Estimator.PosVel.Position(3);
+    delta_UVW_readyTosend[0] = Estimator.PosVel.Velocity(1);
+    delta_UVW_readyTosend[1] = Estimator.PosVel.Velocity(2);
+    delta_UVW_readyTosend[2] = Estimator.PosVel.Velocity(3);
     isGPSvalid_readyTosend = isGPSvalid;
     sei();
     if (isGPSvalid)

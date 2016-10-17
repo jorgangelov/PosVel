@@ -46,8 +46,10 @@ void setup()
   blink(15);
 
   // Waiting for Second FIX
-
-
+  bool got_initial_pos = false;
+  
+  while ( !got_initial_pos)
+  {
     if (Uart.getData(Buffer) )
     {
       // Parsing
@@ -56,9 +58,14 @@ void setup()
       {
         gps.encode(*(gpsStream++));
       }
+      if (gps.location.isUpdated())
+      {
+        got_initial_pos = true;
+      }
 
     }
-  
+    
+  }
   
   initial_LLA(1) = gps.location.lat();
   initial_LLA(2) = gps.location.lng();

@@ -1,7 +1,7 @@
 #include "TinyGPS++.h"
 #include "COMM.h"
 #include "GPS.h"
-#include <Wire.h>
+#include "Wire.h"
 
 TinyGPSPlus gps;
 cSerial Uart;

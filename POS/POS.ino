@@ -146,7 +146,7 @@ void loop()
 
 void sendData()
 {
-  Wire.write((char*)&delta_NED_readyTosend, sizeof(delta_NED_readyTosend));
-  Wire.write((char*)&delta_UVW_readyTosend, sizeof(delta_UVW_readyTosend));
-  Wire.write((char*)&isGPSvalid_readyTosend, sizeof(isGPSvalid_readyTosend));
+  Wire.write((uint8_t*)&delta_NED_readyTosend, sizeof(delta_NED_readyTosend));
+  Wire.write((uint8_t*)&delta_UVW_readyTosend, sizeof(delta_UVW_readyTosend));
+  Wire.write((uint8_t*)&isGPSvalid_readyTosend, sizeof(isGPSvalid_readyTosend));
 }

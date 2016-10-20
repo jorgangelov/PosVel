@@ -2,6 +2,8 @@
 #include "COMM.h"
 #include "GPS.h"
 #include "Wire.h"
+#include "PreCalibration.h"
+
 
 TinyGPSPlus gps;
 cSerial Uart;
@@ -20,10 +22,8 @@ uint16_t num;
 void setup()
 {
   blink(2);
+  preCalibrate();
   Uart.begin();
-
-
-  Serial.println("Waiting for GPS...");
 
   // Waiting for first FIX
   while ( !gps.location.isValid() )
@@ -41,13 +41,11 @@ void setup()
     }
   }
 
-
-  Serial.println("FOUND GPS!");
   blink(15);
 
   // Waiting for Second FIX
   bool got_initial_pos = false;
-  
+
   while ( !got_initial_pos)
   {
     if (Uart.getData(Buffer) )
@@ -64,9 +62,9 @@ void setup()
       }
 
     }
-    
+
   }
-  
+
   initial_LLA(1) = gps.location.lat();
   initial_LLA(2) = gps.location.lng();
   initial_LLA(3) = gps.altitude.meters();

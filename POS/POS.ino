@@ -23,7 +23,6 @@ void setup()
 {
   blink(2);
   preCalibrate();
-  Uart.begin();
 
   // Waiting for first FIX
   while ( !gps.location.isValid() )

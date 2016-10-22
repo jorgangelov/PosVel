@@ -23,6 +23,10 @@ void setup()
 {
   blink(2);
   preCalibrate();
+  memset(delta_NED_readyTosend,0,sizeof(delta_NED_readyTosend));
+  memset(delta_UVW_readyTosend,0,sizeof(delta_UVW_readyTosend));
+  Wire.begin(42);
+  Wire.onRequest(sendData);
 
   // Waiting for first FIX
   while ( !gps.location.isValid() )
@@ -67,8 +71,9 @@ void setup()
   initial_LLA(1) = gps.location.lat();
   initial_LLA(2) = gps.location.lng();
   initial_LLA(3) = gps.altitude.meters();
-  Wire.begin(42);
-  Wire.onRequest(sendData);
+  Estimator.begin(millis());
+
+
 
   // Starting Loop
   while (1)
@@ -143,7 +148,7 @@ void loop()
 
 void sendData()
 {
-  Wire.write((uint8_t*)&delta_NED_readyTosend, sizeof(delta_NED_readyTosend));
-  Wire.write((uint8_t*)&delta_UVW_readyTosend, sizeof(delta_UVW_readyTosend));
+  Wire.write((uint8_t*)delta_NED_readyTosend, sizeof(delta_NED_readyTosend));
+  Wire.write((uint8_t*)delta_UVW_readyTosend, sizeof(delta_UVW_readyTosend));
   Wire.write((uint8_t*)&isGPSvalid_readyTosend, sizeof(isGPSvalid_readyTosend));
 }

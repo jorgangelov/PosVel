@@ -11,9 +11,9 @@ cPVEstimation Estimator;
 cVector<3> initial_LLA;
 cVector<3> delta_NED;
 bool isGPSvalid = false;
-volatile float delta_NED_readyTosend[3];
-volatile float delta_UVW_readyTosend[3];
-volatile bool isGPSvalid_readyTosend = false;
+
+I2CPackage package;
+
 unsigned long watchdog = 0;
 
 char Buffer[600];
@@ -23,11 +23,9 @@ void setup()
 {
   blink(2);
   preCalibrate();
-  memset(delta_NED_readyTosend,0,sizeof(delta_NED_readyTosend));
-  memset(delta_UVW_readyTosend,0,sizeof(delta_UVW_readyTosend));
   Wire.begin(42);
   Wire.onRequest(sendData);
-
+    
   // Waiting for first FIX
   while ( !gps.location.isValid() )
   {
@@ -118,13 +116,13 @@ void setup()
     Estimator.update(millis(), delta_NED);
 
     cli();
-    delta_NED_readyTosend[0] = Estimator.PosVel.Position(1);
-    delta_NED_readyTosend[1] = Estimator.PosVel.Position(2);
-    delta_NED_readyTosend[2] = Estimator.PosVel.Position(3);
-    delta_UVW_readyTosend[0] = Estimator.PosVel.Velocity(1);
-    delta_UVW_readyTosend[1] = Estimator.PosVel.Velocity(2);
-    delta_UVW_readyTosend[2] = Estimator.PosVel.Velocity(3);
-    isGPSvalid_readyTosend = isGPSvalid;
+    package.delta_NED_readyTosend[0] = Estimator.PosVel.Position(1);
+    package.delta_NED_readyTosend[1] = Estimator.PosVel.Position(2);
+    package.delta_NED_readyTosend[2] = Estimator.PosVel.Position(3);
+    package.delta_UVW_readyTosend[0] = Estimator.PosVel.Velocity(1);
+    package.delta_UVW_readyTosend[1] = Estimator.PosVel.Velocity(2);
+    package.delta_UVW_readyTosend[2] = Estimator.PosVel.Velocity(3);
+    package.isGPSvalid_readyTosend = isGPSvalid;
     sei();
     if (isGPSvalid)
     {
@@ -148,7 +146,5 @@ void loop()
 
 void sendData()
 {
-  Wire.write((uint8_t*)delta_NED_readyTosend, sizeof(delta_NED_readyTosend));
-  Wire.write((uint8_t*)delta_UVW_readyTosend, sizeof(delta_UVW_readyTosend));
-  Wire.write((uint8_t*)&isGPSvalid_readyTosend, sizeof(isGPSvalid_readyTosend));
+  Wire.write((uint8_t*)&package, sizeof(package));
 }

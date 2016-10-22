@@ -13,6 +13,19 @@ struct tPVState
 };
 
 
+struct I2CPackage
+{
+I2CPackage():isGPSvalid_readyTosend(false)
+  {
+
+  }
+
+volatile float delta_NED_readyTosend[3];
+volatile float delta_UVW_readyTosend[3];
+volatile bool isGPSvalid_readyTosend;
+};
+
+
 class cPVEstimation
 {
   public:
